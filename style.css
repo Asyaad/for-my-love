@@ -575,26 +575,31 @@ body {
     }
 }
 
-/* ===== MOBILE SCROLLING FIXES ===== */
+/* ===== MOBILE SCROLLING FIX - ADD THIS ===== */
 @media (max-width: 768px) {
-    /* Ensure body allows scrolling */
-    body {
-        min-height: 100vh;
-        overflow-y: auto;
-    }
-    
-    /* Fix for envelope on mobile */
+    /* Fix for mobile scrolling */
     .envelope.opened {
-        max-height: 70vh; /* Limit height on mobile */
-        overflow: hidden;
+        position: relative;
+        overflow: visible;
+        min-height: 450px;
     }
     
-    /* Letter content mobile optimization */
     .letter-content {
-        /* Ensure it's scrollable on mobile */
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        height: auto !important;
+        max-height: 300px !important;
+        margin: 20px;
+        padding: 20px !important;
         overflow-y: scroll !important;
         -webkit-overflow-scrolling: touch !important;
         touch-action: pan-y !important;
-        overscroll-behavior: contain !important;
+    }
+    
+    .envelope-wrapper {
+        min-height: 500px;
     }
 }
