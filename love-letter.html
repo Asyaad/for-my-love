@@ -2,53 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our 3rd Anniversary - Love Letter</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <!-- Floating hearts background -->
-    <div class="floating-hearts" id="hearts"></div>
+    <div class="floating-hearts" id="hearts" aria-hidden="true"></div>
     
-    <div class="header">
+    <header class="header" role="banner">
         <h1>Happy 3rd Anniversary, My Love 💖</h1>
         <p class="subtitle">I have something special for you...</p>
-    </div>
+    </header>
     
-    <div class="envelope-wrapper">
-        <div class="envelope-container" id="envelopeContainer">
-            <div class="envelope" id="envelope">
-                <div class="heart-icon">💌</div>
-                <div class="click-text">Click to Open Your Love Letter</div>
-                <div class="envelope-flap"></div>
-                
-                <!-- Letter Content (hidden initially) -->
-                <div class="letter-content">
-                    <p>My Syazwina,</p>
-                    <p>Three years ago today, we decided that this would be the very beginning of our love story.</p>
-                    <p>Ever since that day, my life has been filled with such love, joy, and adventure.</p>
-                    <p>Everytime I see your radiant smile, I hear your adorable laugh, I see your beautiful eyes, your kindness, your empathy, your brilliance,</p>
-                    <p>I realize how truly lucky I am to have such an amazing woman in my life and how lucky I am that you chose <strong>ME</strong> out of anybody else in the world.</p>
-                    <p>These 3 years have been the best of my life, and I'm so thankful that I got to spend them with someone as amazing as you.</p>
-                    <p>I pray that we will keep continuing our journey in life together because I believe that this is only the beginning of a neverending story <3</p>
+    <main role="main">
+        <div class="envelope-wrapper">
+            <div class="envelope-container" id="envelopeContainer" role="button" 
+                 aria-label="Open love letter" tabindex="0" 
+                 aria-expanded="false" aria-controls="letterContent">
+                <div class="envelope" id="envelope">
+                    <div class="heart-icon" aria-hidden="true">💌</div>
+                    <div class="click-text">Click to Open Your Love Letter</div>
+                    <div class="envelope-flap" aria-hidden="true"></div>
                     
-                    <div class="signature">
-                        With all my love,<br>
-                        Arsyad 💕
+                    <!-- Letter Content (hidden initially) -->
+                    <div class="letter-content" id="letterContent" aria-hidden="true" role="region" aria-label="Love letter content">
+                        <p>My Syazwina,</p>
+                        <p>Three years ago today, we decided that this would be the very beginning of our love story.</p>
+                        <p>Ever since that day, my life has been filled with such love, joy, and adventure.</p>
+                        <p>Everytime I see your radiant smile, I hear your adorable laugh, I see your beautiful eyes, your kindness, your empathy, your brilliance,</p>
+                        <p>I realize how truly lucky I am to have such an amazing woman in my life and how lucky I am that you chose <strong>ME</strong> out of anybody else in the world.</p>
+                        <p>These 3 years have been the best of my life, and I'm so thankful that I got to spend them with someone as amazing as you.</p>
+                        <p>I pray that we will keep continuing our journey in life together because I believe that this is only the beginning of a neverending story <3</p>
+                        
+                        <div class="signature">
+                            With all my love,<br>
+                            Arsyad 💕
+                        </div>
                     </div>
                 </div>
+                <div class="seal" aria-hidden="true">💖</div>
             </div>
-            <div class="seal">💖</div>
         </div>
-    </div>
-    
-    <p class="instruction" id="instruction">Click the envelope to open your love letter</p>
-    
-    <!-- This button appears after letter is opened -->
-    <button class="next-button" id="nextButton" onclick="window.location.href='video-page.html'">
-        💕 Continue to my next surprise hehe 💕
-    </button>
+        
+        <p class="instruction" id="instruction">Click the envelope to open your love letter</p>
+        
+        <!-- This button appears after letter is opened -->
+        <button class="next-button" id="nextButton" onclick="window.location.href='video-page.html'">
+            💕 Continue to my next surprise hehe 💕
+        </button>
+    </main>
     
     <script>
         // Create floating hearts
@@ -65,23 +71,26 @@
             }
         }
         
-        // Envelope animation
+        // DOM elements
         const envelope = document.getElementById('envelope');
         const envelopeContainer = document.getElementById('envelopeContainer');
+        const letterContent = document.getElementById('letterContent');
         const nextButton = document.getElementById('nextButton');
         const instruction = document.getElementById('instruction');
         
         let isOpen = false;
         
-        envelopeContainer.addEventListener('click', function() {
+        function openEnvelope() {
             if (!isOpen) {
                 // Mark as opened
                 isOpen = true;
                 envelopeContainer.classList.add('opened');
+                envelopeContainer.setAttribute('aria-expanded', 'true');
                 document.body.classList.add('letter-opened');
                 
                 // Open the envelope
                 envelope.classList.add('opened');
+                letterContent.setAttribute('aria-hidden', 'false');
                 
                 // Change instruction text
                 setTimeout(() => {
@@ -92,13 +101,34 @@
                 setTimeout(() => {
                     nextButton.classList.add('show');
                     instruction.textContent = "Ready sikkk?? Cerrr tekann button di bawah herher";
+                    
+                    // Focus the next button for accessibility
+                    nextButton.focus();
                 }, 2500);
+            }
+        }
+        
+        // Click event
+        envelopeContainer.addEventListener('click', openEnvelope);
+        
+        // Keyboard support (Enter/Space)
+        envelopeContainer.addEventListener('keydown', function(e) {
+            if ((e.key === 'Enter' || e.key === ' ') && !isOpen) {
+                e.preventDefault();
+                openEnvelope();
             }
         });
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createHearts();
+            // Set initial focus for accessibility
+            envelopeContainer.focus();
+        });
+        
+        // Prevent right-click context menu on envelope
+        envelopeContainer.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
         });
     </script>
 </body>
