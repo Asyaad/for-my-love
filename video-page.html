@@ -1,138 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our 3rd Anniversary - Special Video</title>
-    <style>
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #ffe6e6 0%, #e6f7ff 100%);
-            text-align: center;
-            padding: 20px;
-            min-height: 100vh;
-            margin: 0;
-        }
-        
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: rgba(255, 64, 129, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: transform 0.3s;
-            z-index: 10;
-        }
-        
-        .back-button:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 64, 129, 1);
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 60px auto 30px;
-            background: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.2);
-            border: 3px solid #ff4081;
-        }
-        
-        h1 {
-            color: #ff4081;
-            font-size: 2.5em;
-            margin-bottom: 25px;
-        }
-        
-        p {
-            line-height: 1.8;
-            color: #333;
-            text-align: left;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-        
-        .love-message {
-            color: #ff4081;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-top: 30px;
-            display: block;
-            text-align: center;
-        }
-        
-        .video-container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.2);
-            border: 3px solid #ff4081;
-        }
-        
-        .video-title {
-            color: #ff4081;
-            font-size: 1.4em;
-            margin-bottom: 20px;
-            display: block;
-        }
-        
-        iframe {
-            width: 100%;
-            max-width: 700px;
-            height: 400px;
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .heart {
-            font-size: 2em;
-            color: #ff4081;
-            margin: 20px 0;
-            animation: heartbeat 1.5s infinite;
-        }
-        
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        
-        .final-message {
-            margin-top: 40px;
-            padding: 20px;
-            background: rgba(255, 64, 129, 0.1);
-            border-radius: 15px;
-            border-left: 5px solid #ff4081;
-        }
-        
-        @media (max-width: 600px) {
-            .container, .video-container {
-                padding: 20px;
-                margin: 20px 10px;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            iframe {
-                height: 250px;
-            }
-            
-            .back-button {
-                top: 10px;
-                left: 10px;
-                padding: 8px 16px;
-                font-size: 0.9em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Back button to return to love letter -->
@@ -140,14 +12,17 @@
         ← Back to Love Letter
     </button>
     
-    <div class="container">
+    <!-- Floating hearts -->
+    <div class="floating-hearts" id="hearts"></div>
+    
+    <div class="video-page-container">
         <h1>Happy 3 Years Anniversary My Beloved ❤️</h1>
         <p>It's honestly crazy how far we've come. I've always said and believed that you are my fated one and that we'll be together forever.</p>
         <p>But now that we've actually reached such a milestone like 3 Years, I truly, truly can see and believe that, you are the only one I'd ever want for the rest of my life.</p>
         <p>Sayang, Thank You. Thank you so much for choosing me 3 years ago and for loving me with all you have, for everything that you have given me.</p>
         
-        <span class="love-message">I love you. And I always, always will.</span>
-        <div class="heart">💖</div>
+        <span class="video-page-love-message">I love you. And I always, always will.</span>
+        <div class="video-page-heart">💖</div>
     </div>
     
     <div class="video-container">
@@ -156,17 +31,32 @@
         <iframe 
             src="https://drive.google.com/file/d/1J39bZMoNasAbmpvuJMSfjV8Y8K16oRtR/preview" 
             allow="autoplay"
-            allowfullscreen>
+            allowfullscreen
+            class="video-player">
         </iframe>
     </div>
     
-    <div class="container final-message">
-        <p style="text-align: center; font-size: 1.2em;">
-            Thank you for being by my side through thick and thin.<br>
-            I can't wait for many more years together.<br>
-            <strong style="color: #ff4081;">Forever yours.</strong>
-        </p>
+    <div class="video-page-container final-message">
+        <p>Thank you for being by my side through thick and thin.<br>
+        I can't wait for many more years together.<br>
+        <strong style="color: #ff4081;">Forever yours.</strong></p>
         <div style="text-align: center; font-size: 2em; color: #ff4081;">💕💕💕</div>
     </div>
+    
+    <script>
+        // Create floating hearts for video page too
+        document.addEventListener('DOMContentLoaded', function() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        });
+    </script>
 </body>
 </html>

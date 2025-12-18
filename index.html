@@ -1,13 +1,174 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Misterius</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Something Mysterious Awaits...</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Special styling just for the mystery page */
+        .mystery-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(255, 64, 129, 0.3);
+            border: 3px solid #ff4081;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mystery-container::before {
+            content: '?';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            font-size: 200px;
+            color: rgba(255, 64, 129, 0.1);
+            font-weight: bold;
+            transform: rotate(15deg);
+            z-index: 0;
+        }
+        
+        .mystery-title {
+            color: #ff4081;
+            font-size: 3em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        
+        .mystery-subtitle {
+            color: #666;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mystery-hint {
+            color: #ff80ab;
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mystery-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #ff4081 0%, #ff80ab 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 64, 129, 0.4);
+            position: relative;
+            z-index: 1;
+            border: 3px solid white;
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .mystery-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 64, 129, 0.6);
+            background: linear-gradient(135deg, #ff1a6d 0%, #ff4081 100%);
+        }
+        
+        .floating-question {
+            font-size: 40px;
+            color: #ff4081;
+            animation: float 3s infinite ease-in-out;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(255, 64, 129, 0.4); }
+            50% { box-shadow: 0 10px 40px rgba(255, 64, 129, 0.8); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .question-marks {
+            margin: 30px 0;
+            font-size: 2em;
+            color: #ff80ab;
+        }
+        
+        .mystery-note {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        @media (max-width: 600px) {
+            .mystery-container {
+                padding: 30px 20px;
+                margin: 50px 20px;
+            }
+            
+            .mystery-title {
+                font-size: 2.2em;
+            }
+            
+            .mystery-subtitle {
+                font-size: 1.4em;
+            }
+            
+            .mystery-button {
+                padding: 15px 40px;
+                font-size: 1.3em;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>What is this? What is this Website?</h1>
-        <h2>I never seen this before, this is so mysterious wow wow crazy</h2>
-        <h3>Why dont you.. click the button below? hehe</h3>
-        <a href="love-letter.html" class="button">Click me baby I know you want to oh yeah hehe</a>
+    <!-- Floating hearts from your existing style.css -->
+    <div class="floating-hearts" id="hearts"></div>
+    
+    <div class="mystery-container">
+        <h1 class="mystery-title">Eh what? what is thiss???</h1>
+        
+        <div class="question-marks">
+            <span class="floating-question">?</span>
+            <span class="floating-question" style="animation-delay: 0.5s">?</span>
+            <span class="floating-question" style="animation-delay: 1s">?</span>
+        </div>
+        
+        <h2 class="mystery-subtitle">You must be curiouss rightttt???</h2>
+        <h3 class="mystery-hint">Why don't you click the button below and find out🤔</h3>
+        
+        <a href="love-letter.html" class="mystery-button">
+            🔍 Click me bebe i know you want to oye oye 🔍
+        </a>
     </div>
+    
+    <script>
+        // Create floating hearts (using your existing function)
+        document.addEventListener('DOMContentLoaded', function() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❓'; // Using question marks instead of hearts for mystery
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.color = `rgba(255, ${Math.random() * 100 + 64}, ${Math.random() * 100 + 129}, 0.4)`;
+                heartsContainer.appendChild(heart);
+            }
+        });
+    </script>
 </body>
 </html>
