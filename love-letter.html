@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our 3rd Anniversary - Love Letter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffe6e6 0%, #e6f7ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 64, 129, 0.3);
+            font-size: 20px;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            color: #ff4081;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.3em;
+            font-style: italic;
+        }
+        
+        /* SIMPLIFIED ENVELOPE STYLES */
+        .envelope-wrapper {
+            width: 300px;
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .envelope-container {
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .envelope-container:hover:not(.opened) {
+            transform: translateY(-10px);
+        }
+        
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff4081 0%, #ff80ab 100%);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transform-origin: top;
+            overflow: hidden;
+        }
+        
+        .envelope-flap {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid #ff1a6d;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            transition: transform 0.8s 0.3s;
+            transform-origin: top;
+        }
+        
+        .envelope.opened {
+            height: 500px;
+            background: #fff9f0;
+            transform: translateY(0);
+            color: #5a3d2b;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border: 2px solid #ffd1dc;
+            z-index: 3;
+        }
+        
+        .envelope.opened .envelope-flap {
+            transform: rotateX(180deg);
+            border-bottom-color: #ff4081;
+        }
+        
+        .heart-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+            transition: opacity 0.5s;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .envelope.opened .heart-icon {
+            opacity: 0;
+            position: absolute;
+            top: 20px;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .click-text {
+            font-size: 1.2em;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.5s;
+        }
+        
+        .envelope.opened .click-text {
+            opacity: 0;
+        }
+        
+        /* Letter Content - Appears when opened */
+        .letter-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s 0.8s;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 1.6em;
+            color: #5a3d2b;
+            line-height: 1.6;
+            text-align: center;
+            padding: 40px 30px;
+            height: 100%;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .envelope.opened .letter-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .signature {
+            margin-top: 30px;
+            font-size: 1.8em;
+            color: #ff4081;
+            font-family: 'Dancing Script', cursive;
+            text-align: right;
+            padding-right: 30px;
+        }
+        
+        .seal {
+            position: absolute;
+            bottom: -25px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #ff4081;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+            animation: pulse 2s infinite;
+            z-index: 4;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Next Page Button */
+        .next-button {
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ff4081 0%, #ff80ab 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.5s 1.5s;
+            box-shadow: 0 10px 20px rgba(255, 64, 129, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .next-button.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .next-button:hover {
+            transform: translateY(-5px);
+        }
+        
+        .instruction {
+            margin-top: 20px;
+            color: #ff4081;
+            font-size: 1.1em;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            min-height: 40px;
+            transition: margin-top 0.8s;
+        }
+        
+        .letter-opened .instruction {
+            margin-top: 120px; /* Pushes instruction down when letter is open */
+        }
+        
+        @media (max-width: 600px) {
+            .envelope-wrapper {
+                width: 280px;
+            }
+            
+            .envelope {
+                width: 280px;
+                height: 180px;
+            }
+            
+            .envelope.opened {
+                height: 450px;
+            }
+            
+            .envelope-flap {
+                border-left: 140px solid transparent;
+                border-right: 140px solid transparent;
+                border-bottom: 90px solid #ff1a6d;
+            }
+            
+            .letter-content {
+                font-size: 1.4em;
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .next-button {
+                padding: 12px 30px;
+                font-size: 1.1em;
+            }
+            
+            .letter-opened .instruction {
+                margin-top: 100px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="floating-hearts" id="hearts"></div>
+    
+    <div class="header">
+        <h1>Happy 3rd Anniversary, My Love 💖</h1>
+        <p class="subtitle">I have something special for you...</p>
+    </div>
+    
+    <div class="envelope-wrapper">
+        <div class="envelope-container" id="envelopeContainer">
+            <div class="envelope" id="envelope">
+                <div class="heart-icon">💌</div>
+                <div class="click-text">Click to Open Your Love Letter</div>
+                <div class="envelope-flap"></div>
+                
+                <!-- Letter Content (hidden initially) -->
+                <div class="letter-content">
+                    <p>My Syazwina,</p>
+                    <p>Three years ago today, we decided that this would be the very beginning of our love story.</p>
+                    <p>Ever since that day, my life has been filled with such love, joy, and adventure.</p>
+                    <p>Everytime I see your radiant smile, I hear your adorable laugh, I see your beautiful eyes, your kindness, your empathy, your brilliance,</p>
+                    <p>I realize how truly lucky I am to have such an amazing woman in my life and how lucky I am that you chose <strong>ME</strong> out of anybody else in the world.</p>
+                    <p>These 3 years have been the best of my life, and I'm so thankful that I got to spend them with someone as amazing as you.</p>
+                    <P>I pray that we will keep continuing our journey in life together because I believe that this is only the beginning of a neverending story <3 </p>
+                    
+                    <div class="signature">
+                        With all my love,<br>
+                        Arsyad 💕
+                    </div>
+                </div>
+            </div>
+            <div class="seal">💖</div>
+        </div>
+    </div>
+    
+    <p class="instruction" id="instruction">Click the envelope to open your love letter</p>
+    
+    <!-- This button appears after letter is opened -->
+    <button class="next-button" id="nextButton" onclick="window.location.href='video-page.html'">
+        💕 Continue to my next surprise hehe 💕
+    </button>
+    
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Envelope animation
+        const envelope = document.getElementById('envelope');
+        const envelopeContainer = document.getElementById('envelopeContainer');
+        const nextButton = document.getElementById('nextButton');
+        const instruction = document.getElementById('instruction');
+        
+        let isOpen = false;
+        
+        envelopeContainer.addEventListener('click', function() {
+            if (!isOpen) {
+                // Mark as opened
+                isOpen = true;
+                envelopeContainer.classList.add('opened');
+                document.body.classList.add('letter-opened');
+                
+                // Open the envelope
+                envelope.classList.add('opened');
+                
+                // Change instruction text
+                setTimeout(() => {
+                    instruction.textContent = "I love you more than words can say... 💕";
+                }, 800);
+                
+                // Show the next button after a delay
+                setTimeout(() => {
+                    nextButton.classList.add('show');
+                    instruction.textContent = "Ready sikkk?? Cerrr tekann button di bawah herher";
+                }, 2500);
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+        });
+    </script>
+</body>
+</html>
