@@ -30,17 +30,19 @@
                     
                     <!-- Letter Content (hidden initially) -->
                     <div class="letter-content" id="letterContent" aria-hidden="true" role="region" aria-label="Love letter content">
-                        <p>My Syazwina,</p>
-                        <p>Three years ago today, we decided that this would be the very beginning of our love story.</p>
-                        <p>Ever since that day, my life has been filled with such love, joy, and adventure.</p>
-                        <p>Everytime I see your radiant smile, I hear your adorable laugh, I see your beautiful eyes, your kindness, your empathy, your brilliance,</p>
-                        <p>I realize how truly lucky I am to have such an amazing woman in my life and how lucky I am that you chose <strong>ME</strong> out of anybody else in the world.</p>
-                        <p>These 3 years have been the best of my life, and I'm so thankful that I got to spend them with someone as amazing as you.</p>
-                        <p>I pray that we will keep continuing our journey in life together because I believe that this is only the beginning of a neverending story <3</p>
-                        
-                        <div class="signature">
-                            With all my love,<br>
-                            Arsyad 💕
+                        <div class="letter-inner">
+                            <p>My Syazwina,</p>
+                            <p>Three years ago today, we decided that this would be the very beginning of our love story.</p>
+                            <p>Ever since that day, my life has been filled with such love, joy, and adventure.</p>
+                            <p>Everytime I see your radiant smile, I hear your adorable laugh, I see your beautiful eyes, your kindness, your empathy, your brilliance,</p>
+                            <p>I realize how truly lucky I am to have such an amazing woman in my life and how lucky I am that you chose <strong>ME</strong> out of anybody else in the world.</p>
+                            <p>These 3 years have been the best of my life, and I'm so thankful that I got to spend them with someone as amazing as you.</p>
+                            <p>I pray that we will keep continuing our journey in life together because I believe that this is only the beginning of a neverending story 💕</p>
+                            
+                            <div class="signature">
+                                With all my love,<br>
+                                Arsyad 💕
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,6 +93,11 @@
                 // Open the envelope
                 envelope.classList.add('opened');
                 letterContent.setAttribute('aria-hidden', 'false');
+                
+                // Scroll to top of letter content after opening
+                setTimeout(() => {
+                    letterContent.scrollTop = 0;
+                }, 900);
                 
                 // Change instruction text
                 setTimeout(() => {

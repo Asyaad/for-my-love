@@ -171,7 +171,6 @@ body {
     z-index: 1;
 }
 
-/* MOVED h1 styling here to avoid conflicts */
 .header h1 {
     color: #ff4081;
     font-size: 2.8em;
@@ -204,7 +203,7 @@ body {
 }
 
 .envelope-container.opened {
-    pointer-events: none; /* Prevent double-clicks when opened */
+    pointer-events: none;
 }
 
 .envelope {
@@ -221,7 +220,7 @@ body {
     color: white;
     transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     transform-origin: top;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .envelope-flap {
@@ -238,7 +237,8 @@ body {
 }
 
 .envelope.opened {
-    height: 500px;
+    height: auto;
+    min-height: 500px;
     background: #fff9f0;
     transform: translateY(0);
     color: #5a3d2b;
@@ -280,7 +280,7 @@ body {
     opacity: 0;
 }
 
-/* ===== LETTER CONTENT ===== */
+/* ===== LETTER CONTENT - FIXED FOR SCROLLING ===== */
 .letter-content {
     opacity: 0;
     transform: translateY(30px);
@@ -291,18 +291,32 @@ body {
     line-height: 1.6;
     text-align: center;
     padding: 40px 30px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    
-    /* FIXED: Mobile scrolling support */
+    max-height: 400px;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    touch-action: pan-y; /* Allow vertical touch gestures */
-    overscroll-behavior: contain; /* Prevent scroll chaining */
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #ff4081 #ffd1dc;
+}
+
+/* Custom scrollbar for webkit browsers */
+.letter-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.letter-content::-webkit-scrollbar-track {
+    background: #ffd1dc;
+    border-radius: 10px;
+}
+
+.letter-content::-webkit-scrollbar-thumb {
+    background: #ff4081;
+    border-radius: 10px;
+}
+
+.letter-content::-webkit-scrollbar-thumb:hover {
+    background: #ff1a6d;
 }
 
 .envelope.opened .letter-content {
@@ -491,7 +505,6 @@ body {
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
-    /* Mystery page */
     .mystery-container {
         padding: 30px 20px;
         margin: 50px 20px;
@@ -510,7 +523,6 @@ body {
         font-size: 1.3em;
     }
     
-    /* Love letter page */
     .envelope-wrapper {
         width: 280px;
     }
@@ -521,7 +533,7 @@ body {
     }
     
     .envelope.opened {
-        height: 450px;
+        min-height: 450px;
     }
     
     .envelope-flap {
@@ -531,13 +543,9 @@ body {
     }
     
     .letter-content {
-        font-size: 1.4em;
+        font-size: 1.3em;
         padding: 30px 20px;
-        
-        /* Additional mobile fixes */
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
-        overscroll-behavior: contain;
+        max-height: 350px;
     }
     
     .header h1 {
@@ -553,7 +561,6 @@ body {
         margin-top: 100px;
     }
     
-    /* Video page */
     .video-page-container, .video-container {
         padding: 20px;
         margin: 20px 10px;
@@ -572,34 +579,5 @@ body {
         left: 10px;
         padding: 8px 16px;
         font-size: 0.9em;
-    }
-}
-
-/* ===== MOBILE SCROLLING FIX - ADD THIS ===== */
-@media (max-width: 768px) {
-    /* Fix for mobile scrolling */
-    .envelope.opened {
-        position: relative;
-        overflow: visible;
-        min-height: 450px;
-    }
-    
-    .letter-content {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        height: auto !important;
-        max-height: 300px !important;
-        margin: 20px;
-        padding: 20px !important;
-        overflow-y: scroll !important;
-        -webkit-overflow-scrolling: touch !important;
-        touch-action: pan-y !important;
-    }
-    
-    .envelope-wrapper {
-        min-height: 500px;
     }
 }
