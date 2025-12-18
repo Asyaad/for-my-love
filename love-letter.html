@@ -2,12 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our 3rd Anniversary - Love Letter</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* Inline critical styles to ensure scrolling works */
+        .letter-content {
+            overflow-y: scroll !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            touch-action: pan-y !important;
+            overscroll-behavior: contain !important;
+        }
+        
+        .envelope-container.opened {
+            pointer-events: auto !important;
+        }
+        
+        .envelope.opened .letter-content {
+            pointer-events: auto !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Floating hearts background -->
@@ -94,14 +112,16 @@
                 envelope.classList.add('opened');
                 letterContent.setAttribute('aria-hidden', 'false');
                 
-                // Scroll to top of letter content after opening
+                // CRITICAL: Re-enable pointer events on letter content after opening
                 setTimeout(() => {
+                    envelopeContainer.style.pointerEvents = 'auto';
+                    letterContent.style.pointerEvents = 'auto';
                     letterContent.scrollTop = 0;
                 }, 900);
                 
                 // Change instruction text
                 setTimeout(() => {
-                    instruction.textContent = "I love you more than words can say... 💕";
+                    instruction.textContent = "Scroll down to read the full letter 💕";
                 }, 800);
                 
                 // Show the next button after a delay
@@ -111,12 +131,22 @@
                     
                     // Focus the next button for accessibility
                     nextButton.focus();
-                }, 2500);
+                }, 3500);
             }
         }
         
-        // Click event
-        envelopeContainer.addEventListener('click', openEnvelope);
+        // Click event - only for envelope, not letter content
+        envelopeContainer.addEventListener('click', function(e) {
+            // Don't trigger if clicking inside letter content
+            if (!letterContent.contains(e.target)) {
+                openEnvelope();
+            }
+        });
+        
+        // Prevent letter content clicks from closing
+        letterContent.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
         
         // Keyboard support (Enter/Space)
         envelopeContainer.addEventListener('keydown', function(e) {
